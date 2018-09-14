@@ -137,24 +137,16 @@ func sortScanItems(items []*ScanItem) []*ScanItem {
 			return false
 		}
 
-		if x.tree.Name == y.tree.Name {
-			if x.dir < y.dir {
-				return true
-			}
+		if x.dir < y.dir {
+			return true
+		}
 
-			if x.dir > y.dir {
-				return false
-			}
+		if x.dir > y.dir {
+			return false
 		}
 
 		return false
 	})
-
-	//sort.SliceStable(items, func(i, j int) bool {
-	//    if items[i].votes < items[j].votes {
-	//        return true
-	//    }
-	//})
 
 	return items
 }
