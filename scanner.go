@@ -87,6 +87,28 @@ func readdir(path string) ([]string, error) {
 	for _, info := range infos {
 		if info.IsDir() {
 			names = append(names, info.Name())
+			continue
+		}
+
+		if info.Mode()&os.ModeSymlink == os.ModeSymlink {
+			realpath, err := filepath.EvalSymlinks(
+				filepath.Join(path, info.Name()),
+			)
+			if os.IsNotExist(err) {
+				continue
+			}
+			if err != nil {
+				return nil, err
+			}
+
+			realstat, err := os.Stat(realpath)
+			if err != nil {
+				return nil, err
+			}
+
+			if realstat.IsDir() {
+				names = append(names, info.Name())
+			}
 		}
 	}
 
