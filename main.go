@@ -102,6 +102,10 @@ func main() {
 		log.Fatal(err)
 	}
 
+	if choose == nil {
+		return
+	}
+
 	choose.tree.votes[choose.dir] += 1
 
 	err = SaveVotes(config.VotesPath, votes)

@@ -67,6 +67,10 @@ func pick(program string, trees []*Tree, items []*ScanItem) (*ScanItem, error) {
 		)
 	}
 
+	if len(result) == 0 {
+		return nil, nil
+	}
+
 	parts := strings.Split(result, ":")
 	if len(parts) != 2 {
 		return nil, karma.Describe("output", result).Format(
