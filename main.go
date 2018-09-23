@@ -9,7 +9,7 @@ import (
 
 	"github.com/docopt/docopt-go"
 	"github.com/kovetskiy/lorg"
-	logger "github.com/reconquest/structured-logger-go"
+	"github.com/reconquest/cog"
 )
 
 var (
@@ -31,7 +31,7 @@ Options:
 )
 
 var (
-	log *logger.Logger
+	log *cog.Logger
 )
 
 func initLogger(args map[string]interface{}) {
@@ -47,7 +47,7 @@ func initLogger(args map[string]interface{}) {
 		stderr.SetLevel(lorg.LevelDebug)
 	}
 
-	log = logger.NewLogger(stderr)
+	log = cog.NewLogger(stderr)
 }
 
 func main() {
