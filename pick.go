@@ -9,8 +9,13 @@ import (
 	"github.com/reconquest/karma-go"
 )
 
-func pick(program string, trees []*Tree, items []*ScanItem) (*ScanItem, error) {
-	cmd := exec.Command(program)
+func pick(cmdline []string, trees []*Tree, items []*ScanItem) (*ScanItem, error) {
+	var args []string
+	if len(cmdline) > 1 {
+		args = cmdline[1:]
+	}
+
+	cmd := exec.Command(cmdline[0], args...)
 
 	cmd.Stderr = os.Stderr
 	cmd.Stderr = os.Stderr
@@ -75,9 +80,9 @@ func pick(program string, trees []*Tree, items []*ScanItem) (*ScanItem, error) {
 	if len(parts) != 2 {
 		return nil, karma.Describe("output", result).Format(
 			err,
-			"picker '%s' returned invalid output, "+
+			"picker %q returned invalid output, "+
 				"expected to get format 'name: dir'",
-			program,
+			cmdline,
 		)
 	}
 

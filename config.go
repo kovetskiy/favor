@@ -6,7 +6,7 @@ import (
 )
 
 type Config struct {
-	Picker       string   `yaml:"picker" required:"true"`
+	Picker       []string `yaml:"picker" required:"true"`
 	Threads      int      `yaml:"threads" required:"true"`
 	VotesPath    string   `yaml:"votes_path" required:"true"`
 	IgnoreGlobal []string `yaml:"ignore_global"`
