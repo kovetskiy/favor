@@ -48,7 +48,11 @@ func (scanner *Scanner) Scan(tree *Tree, dir string) {
 		}
 	}
 
-	if depth < tree.MaxDepth {
+	if tree.MaxDepth  == 0 && tree.IncludeRoot {
+		return
+	}
+
+	if depth < tree.MaxDepth || dir == "." {
 		path := filepath.Join(tree.Dir, dir)
 
 		names, err := readdir(path)
