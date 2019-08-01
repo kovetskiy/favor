@@ -13,11 +13,12 @@ import (
 type Trees []*Tree
 
 type Tree struct {
-	Name     string   `yaml:"name" required:"true"`
-	Dir      string   `yaml:"dir" required:"true"`
-	MinDepth int      `yaml:"min_depth"`
-	MaxDepth int      `yaml:"max_depth"`
-	Ignore   []string `yaml:"ignore"`
+	Name        string   `yaml:"name" required:"true"`
+	Dir         string   `yaml:"dir" required:"true"`
+	MinDepth    int      `yaml:"min_depth"`
+	MaxDepth    int      `yaml:"max_depth"`
+	Ignore      []string `yaml:"ignore"`
+	IncludeRoot bool     `yaml:"include_root"`
 
 	ignoreMap map[string]struct{}
 	votes     map[string]int

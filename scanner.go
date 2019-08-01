@@ -42,11 +42,13 @@ func (scanner *Scanner) append(tree *Tree, dir string) {
 func (scanner *Scanner) Scan(tree *Tree, dir string) {
 	depth := strings.Count(dir, "/") + 1
 
-	if depth >= tree.MinDepth && dir != "." {
-		scanner.append(tree, dir)
+	if depth >= tree.MinDepth {
+		if dir != "." || tree.IncludeRoot {
+			scanner.append(tree, dir)
+		}
 	}
 
-	if depth < tree.MaxDepth || dir == "." {
+	if depth < tree.MaxDepth {
 		path := filepath.Join(tree.Dir, dir)
 
 		names, err := readdir(path)
