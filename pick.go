@@ -5,6 +5,7 @@ import (
 	"os"
 	"os/exec"
 	"strings"
+	"syscall"
 
 	"github.com/reconquest/karma-go"
 )
@@ -64,7 +65,19 @@ func pick(cmdline []string, trees []*Tree, items []*ScanItem) (*ScanItem, error)
 
 	result := strings.TrimSpace((string(contents)))
 
-	err = cmd.Wait()
+	err = func() error {
+		err = cmd.Wait()
+		if exit, ok := err.(*exec.ExitError); ok {
+			if status, ok := exit.Sys().(syscall.WaitStatus); ok {
+				// fzf returns 130 when user interrupts without choice
+				if status.ExitStatus() == 130 {
+					return nil
+				}
+			}
+		}
+
+		return err
+	}()
 	if err != nil {
 		return nil, karma.Format(
 			err,
