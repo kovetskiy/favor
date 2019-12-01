@@ -25,6 +25,7 @@ Options:
   -c --config <file>  Read following configuration file.
                        [default: $HOME/.config/favor/favor.conf]
   --debug             Enable debug messages.
+  -q --quiet          Do not even print errors. Only result or a fatal error.
   -h --help           Show this screen.
   --version           Show version.
 `)
@@ -45,6 +46,11 @@ func initLogger(args map[string]interface{}) {
 
 	if debug {
 		stderr.SetLevel(lorg.LevelDebug)
+	}
+
+	quiet := args["--quiet"].(bool)
+	if quiet {
+		stderr.SetLevel(lorg.LevelFatal)
 	}
 
 	log = cog.NewLogger(stderr)
